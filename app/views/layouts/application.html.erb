@@ -4,9 +4,26 @@
   <title>MusicApp</title>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
 
-<%= yield %>
+  <% if !current_user.nil? %>
+    Welcome <%= current_user.user_name %>
+
+    <form action="/session" method="POST">
+      <%= auth_token %>
+
+      <input type="hidden" name="_method" value="DELETE">
+        <button>Logout</button>
+
+    </form>
+
+  <% else %>
+    <a href="/session/new"><button>Login</button></a>
+    <a href="<%= new_user_url %>"><button>Sign Up</button></a>
+  <% end %>
+
+  <%= yield %>
 
 </body>
 </html>
